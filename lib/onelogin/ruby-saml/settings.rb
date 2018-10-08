@@ -56,6 +56,7 @@ module OneLogin
       attr_accessor :certificate
       attr_accessor :certificate_new
       attr_accessor :private_key
+      attr_accessor :passphrase
       attr_accessor :authn_context
       attr_accessor :authn_context_comparison
       attr_accessor :authn_context_decl_ref
@@ -182,8 +183,8 @@ module OneLogin
       def get_sp_key
         return nil if private_key.nil? || private_key.empty?
 
-        formatted_private_key = OneLogin::RubySaml::Utils.format_private_key(private_key)
-        OpenSSL::PKey::RSA.new(formatted_private_key)
+        formatted_private_key = private_key
+        OpenSSL::PKey::RSA.new(formatted_private_key, passphrase)
       end
 
       private
